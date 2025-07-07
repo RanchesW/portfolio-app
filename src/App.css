@@ -1,0 +1,84 @@
+.app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  opacity: 0;
+  animation: fadeInApp 0.8s ease-out 0.2s forwards;
+}
+
+@keyframes fadeInApp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app > * {
+  transition: all 0.3s ease-in-out;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+}
+
+.error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px;
+}
+
+[data-theme="dark"] .error {
+  background: #dc2626;
+  color: #fee2e2;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+}

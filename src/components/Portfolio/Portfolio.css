@@ -1,0 +1,130 @@
+.portfolio-page {
+  min-height: 100vh;
+  padding: 100px 40px 40px; /* Увеличил верхний отступ */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.portfolio-container {
+  width: 100%;
+}
+
+.hero-section {
+  margin-bottom: 120px;
+  text-align: left;
+  margin-top: 40px; /* Добавил отступ сверху */
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  letter-spacing: -0.02em;
+}
+
+.accent-text {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.profession {
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.loading-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.featured-work h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 60px;
+  letter-spacing: -0.01em;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 60px;
+}
+
+.work-item {
+  text-align: left;
+}
+
+.work-image {
+  width: 100%;
+  height: 250px;
+  background: var(--surface-color);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.work-item:hover .work-image {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #666;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+[data-theme="dark"] .placeholder-image {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  color: #d1d5db;
+}
+
+.work-item h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.work-item p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .portfolio-page {
+    padding: 80px 20px 40px; /* Уменьшил для мобильных */
+  }
+  
+  .hero-section {
+    margin-bottom: 80px;
+    margin-top: 20px;
+  }
+  
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
