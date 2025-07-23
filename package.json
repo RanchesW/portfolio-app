@@ -5,7 +5,7 @@
   "description": "A personal portfolio application showcasing projects and skills.",
   "author": "Alikhan Abdraimov <a.alikhan2004@gmail.com>",
   "license": "MIT",
-  "homepage": "https://alikhanabdraimov.github.io/portfolio-app/",
+  "homepage": "https://ranchesw.github.io/portfolio-app/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
