@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import ProjectDetail from '../ProjectDetail/ProjectDetail';
 import './Projects.css';
 
 const Projects = ({ user }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const fetchGitHubProjects = async () => {
@@ -101,11 +103,9 @@ const Projects = ({ user }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           {projects.map((project, index) => (
-            <motion.a
+            <motion.div
               key={project.id}
-              href={project.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => setSelectedProject(project)}
               className="project-card"
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -142,10 +142,17 @@ const Projects = ({ user }) => {
                   <span className="project-link">🔗 Live Demo</span>
                 )}
               </div>
-            </motion.a>
+            </motion.div>
           ))}
         </motion.div>
       </div>
+
+      {selectedProject && (
+        <ProjectDetail
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </motion.div>
   );
 };
