@@ -9,8 +9,15 @@
   font-size: 3rem;
   font-weight: 300;
   color: var(--text-primary);
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   letter-spacing: -0.02em;
+}
+
+.projects-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 60px;
+  font-weight: 400;
 }
 
 .projects-grid {
@@ -25,11 +32,16 @@
   padding: 30px;
   transition: all 0.3s ease;
   border: 1px solid var(--border-color);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
 }
 
 .project-card:hover {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   transform: translateY(-5px);
+  border-color: var(--accent-color, #3b82f6);
 }
 
 .project-header {
@@ -93,6 +105,54 @@
   color: var(--text-muted);
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.project-stars {
+  background: #ffe8b3;
+  color: #b45309;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.project-updated {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.project-link {
+  color: #3b82f6;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.loading-message,
+.error-message {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+.tech-tag.topic {
+  background: #e0e7ff;
+  color: #4338ca;
+  border-color: #c7d2fe;
 }
 
 @media (max-width: 768px) {

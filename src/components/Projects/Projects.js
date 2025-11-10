@@ -1,52 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Projects.css';
 
 const Projects = ({ user }) => {
-  const projects = [
-    {
-      id: 1,
-      title: "E-commerce Platform",
-      description: "A modern React-based e-commerce platform with advanced filtering, shopping cart, and payment integration.",
-      tech: ["React", "Node.js", "MongoDB", "Stripe"],
-      status: "Completed",
-      year: "2024"
-    },
-    {
-      id: 2,
-      title: "Design System",
-      description: "Comprehensive design system with reusable components, guidelines, and documentation for a SaaS product.",
-      tech: ["Figma", "React", "Storybook", "CSS"],
-      status: "Completed",
-      year: "2024"
-    },
-    {
-      id: 3,
-      title: "Mobile Banking App",
-      description: "User-friendly mobile banking application with intuitive UX and robust security features.",
-      tech: ["React Native", "TypeScript", "Firebase"],
-      status: "In Progress",
-      year: "2025"
-    },
-    {
-      id: 4,
-      title: "Brand Identity Package",
-      description: "Complete brand identity design including logo, typography, color palette, and brand guidelines.",
-      tech: ["Adobe Illustrator", "Photoshop", "InDesign"],
-      status: "Completed",
-      year: "2023"
-    }
-  ];
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchGitHubProjects = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`https://api.github.com/users/${user.username}/repos?sort=updated&per_page=100`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch repositories');
+        }
+
+        const repos = await response.json();
+
+        // Filter out forks and sort by stars
+        const filteredRepos = repos
+          .filter(repo => !repo.fork)
+          .sort((a, b) => b.stargazers_count - a.stargazers_count);
+
+        setProjects(filteredRepos);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching GitHub projects:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchGitHubProjects();
+  }, [user.username]);
+
+  if (loading) {
+    return (
+      <motion.div
+        className="projects-page"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="projects-container">
+          <h1 className="projects-title">Projects</h1>
+          <div className="loading-message">Loading projects from GitHub...</div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.div
+        className="projects-page"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="projects-container">
+          <h1 className="projects-title">Projects</h1>
+          <div className="error-message">Error loading projects: {error}</div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
-    <motion.div 
+    <motion.div
       className="projects-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
       <div className="projects-container">
-        <motion.h1 
+        <motion.h1
           className="projects-title"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -54,16 +84,28 @@ const Projects = ({ user }) => {
         >
           Projects
         </motion.h1>
-        
-        <motion.div 
+
+        <motion.p
+          className="projects-subtitle"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          {projects.length} repositories from GitHub
+        </motion.p>
+
+        <motion.div
           className="projects-grid"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           {projects.map((project, index) => (
-            <motion.div
+            <motion.a
               key={project.id}
+              href={project.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="project-card"
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -71,22 +113,36 @@ const Projects = ({ user }) => {
               whileHover={{ y: -5 }}
             >
               <div className="project-header">
-                <h3 className="project-title">{project.title}</h3>
-                <span className={`project-status ${project.status.toLowerCase().replace(' ', '-')}`}>
-                  {project.status}
-                </span>
+                <h3 className="project-title">{project.name}</h3>
+                {project.stargazers_count > 0 && (
+                  <span className="project-stars">
+                    ⭐ {project.stargazers_count}
+                  </span>
+                )}
               </div>
-              
-              <p className="project-description">{project.description}</p>
-              
+
+              <p className="project-description">
+                {project.description || 'No description available'}
+              </p>
+
               <div className="project-tech">
-                {project.tech.map((tech, i) => (
-                  <span key={i} className="tech-tag">{tech}</span>
+                {project.language && (
+                  <span className="tech-tag">{project.language}</span>
+                )}
+                {project.topics && project.topics.slice(0, 4).map((topic, i) => (
+                  <span key={i} className="tech-tag topic">{topic}</span>
                 ))}
               </div>
-              
-              <div className="project-year">{project.year}</div>
-            </motion.div>
+
+              <div className="project-footer">
+                <span className="project-updated">
+                  Updated {new Date(project.updated_at).toLocaleDateString()}
+                </span>
+                {project.homepage && (
+                  <span className="project-link">🔗 Live Demo</span>
+                )}
+              </div>
+            </motion.a>
           ))}
         </motion.div>
       </div>
